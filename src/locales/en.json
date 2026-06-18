@@ -1,0 +1,22 @@
+{
+  "auth": {
+    "login": "Login",
+    "register": "Register",
+    "email": "Email address",
+    "password": "Password"
+  },
+  "game": {
+    "title": "Pikow",
+    "newGame": "New Game",
+    "players": "Players",
+    "score": "Score",
+    "status": {
+      "en_cours": "In progress",
+      "terminée": "Completed"
+    }
+  },
+  "contact": {
+    "title": "Contact Us",
+    "send": "Send"
+  }
+}

@@ -1,36 +1,51 @@
-@import "./base.css";
-@import "tailwindcss";
-
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  font-weight: normal;
+@import 'tailwindcss';
+@font-face {
+  font-family: 'Fredoka One';
+  src: url('./fonts/FredokaOne-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-display: swap;
 }
 
-a,
-.green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
-  padding: 3px;
+@font-face {
+  font-family: 'Lazydog';
+  src: url('./fonts/LAZYDOG.CBC654CE48FFA209E8B8698295C5D75D.FBA574EF4DC01D71937608B6F764E2E7.TTF')
+    format('truetype');
+  font-weight: 400;
+  font-display: swap;
 }
 
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
+@font-face {
+  font-family: 'Century Gothic';
+  src: url('./fonts/GOTHICB.TTF') format('truetype');
+  font-weight: 700;
+  font-display: swap;
+}
+
+@theme {
+  --color-pikow-blue: #2b35e8;
+  --color-pikow-blue-dark: #2029c2;
+  --color-pikow-yellow: #ffbf00;
+  --color-pikow-green: #8dd5b9;
+  --color-pikow-teal: #016953;
+  --color-pikow-pink: #fa7da2;
+  --color-pikow-red: #e7544b;
+  --color-pikow-gray: #f4f3f3;
+  --color-pikow-ink: #333333;
+
+  --font-display: 'Fredoka One', cursive;
+  --font-lazydog: 'Lazydog', cursive;
+  --font-body: 'Century Gothic', 'Inter', sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
   }
-}
 
-@media (min-width: 1024px) {
   body {
-    display: flex;
-    place-items: center;
-  }
-
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
+    font-family: var(--font-body);
+    color: var(--color-pikow-ink);
+    background: #ffffff;
+    -webkit-font-smoothing: antialiased;
   }
 }
