@@ -5,6 +5,7 @@ const props = withDefaults(
   defineProps<{
     variant?: 'primary' | 'secondary' | 'yellow'
     type?: 'button' | 'submit' | 'reset'
+    href?: string
     block?: boolean
   }>(),
   { variant: 'primary', type: 'button', block: false },
@@ -20,11 +21,13 @@ const classes = computed(() => [variants[props.variant], props.block ? 'w-full' 
 </script>
 
 <template>
-  <button
-    :type="type"
+  <component
+    :is="href ? 'a' : 'button'"
+    :href="href"
+    :type="href ? undefined : type"
     class="inline-flex cursor-pointer items-center justify-center rounded-full px-7 py-3 font-body text-sm font-bold transition active:scale-95"
     :class="classes"
   >
     <slot />
-  </button>
+  </component>
 </template>

@@ -2,11 +2,18 @@
 import { reactive } from 'vue'
 import SectionTitle from './ui/SectionTitle.vue'
 import BaseInput from './ui/BaseInput.vue'
+import BaseSelect from './ui/BaseSelect.vue'
 import BaseTextarea from './ui/BaseTextarea.vue'
 import BaseCheckbox from './ui/BaseCheckbox.vue'
 import BaseButton from './ui/BaseButton.vue'
 
+const motifs = [
+  { label: 'Contact', value: 'contact' },
+  { label: 'Commande pour une entreprise', value: 'commande-entreprise' },
+]
+
 const form = reactive({
+  motif: 'contact',
   company: '',
   email: '',
   message: '',
@@ -24,6 +31,13 @@ const form = reactive({
       />
 
       <form class="mt-8 flex flex-col gap-5" @submit.prevent>
+        <BaseSelect
+          v-model="form.motif"
+          dark
+          label="Motif"
+          id="join-motif"
+          :options="motifs"
+        />
         <div class="grid gap-5 sm:grid-cols-2">
           <BaseInput v-model="form.company" dark label="Société" id="join-company" />
           <BaseInput v-model="form.email" dark label="Email" id="join-email" type="email" />
