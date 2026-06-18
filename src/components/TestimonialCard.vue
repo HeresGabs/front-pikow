@@ -12,9 +12,7 @@ defineProps<{
 <template>
   <div class="flex flex-col gap-2 rounded-2xl border border-black/5 bg-white p-5 shadow-sm">
     <div class="flex items-center gap-3">
-      <span
-        class="flex size-9 items-center justify-center rounded-lg bg-pikow-blue text-white"
-      >
+      <span class="flex size-9 items-center justify-center rounded-lg bg-pikow-blue text-white">
         <User class="size-5" />
       </span>
       <span class="font-body text-sm font-bold text-pikow-ink">{{ name }}</span>
