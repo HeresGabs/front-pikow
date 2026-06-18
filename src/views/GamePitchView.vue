@@ -10,12 +10,29 @@ import { useTranslateWord } from '@/composables/useTranslateWord'
 import ProfileLink from '@/components/ProfileLink.vue'
 import LeaveGameGuard from '@/components/LeaveGameGuard.vue'
 import LanguageSwitcher from '@/components/LanguageSwitcher.vue'
+import cooldownSound from '@/assets/sounds/10_sec_cooldown.mp3'
 
 const translateWord = useTranslateWord()
 
 const route = useRoute()
 const router = useRouter()
 const game = useGameStore()
+
+const COOLDOWN_AT = 10
+const cooldownAudio = new Audio(cooldownSound)
+let cooldownPlayed = false
+
+function playCooldown() {
+  cooldownPlayed = true
+  cooldownAudio.currentTime = 0
+  cooldownAudio.play().catch(() => {})
+}
+
+function stopCooldown() {
+  cooldownAudio.pause()
+  cooldownAudio.currentTime = 0
+  cooldownPlayed = false
+}
 
 const remaining = ref(game.duration)
 const running = ref(false)
@@ -138,15 +155,19 @@ function stopTimer() {
 function toggleTimer() {
   if (running.value) {
     stopTimer()
+    cooldownAudio.pause()
     return
   }
   if (remaining.value <= 0) remaining.value = game.duration
   running.value = true
+  if (remaining.value <= COOLDOWN_AT && cooldownPlayed) cooldownAudio.play().catch(() => {})
   timer = setInterval(() => {
     remaining.value -= 1
     if (remaining.value <= 0) {
       stopTimer()
       triggerTimeUp()
+    } else if (remaining.value <= COOLDOWN_AT && !cooldownPlayed) {
+      playCooldown()
     }
   }, 1000)
 }
@@ -154,10 +175,12 @@ function toggleTimer() {
 function resetTimer() {
   stopTimer()
   remaining.value = game.duration
+  stopCooldown()
 }
 
 async function advance() {
   stopTimer()
+  stopCooldown()
   if (timeUpTimeout) {
     clearTimeout(timeUpTimeout)
     timeUpTimeout = null
@@ -185,6 +208,7 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
   stopTimer()
+  stopCooldown()
   if (turnTimeout) clearTimeout(turnTimeout)
   if (timeUpTimeout) clearTimeout(timeUpTimeout)
 })
