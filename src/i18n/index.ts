@@ -2,6 +2,8 @@ import { createI18n } from 'vue-i18n'
 import fr from './locales/fr'
 import en from './locales/en'
 import es from './locales/es'
+import wordsEn from './words/en'
+import wordsEs from './words/es'
 
 export const SUPPORTED_LOCALES = ['fr', 'en', 'es'] as const
 export type Locale = (typeof SUPPORTED_LOCALES)[number]
@@ -23,7 +25,11 @@ const i18n = createI18n({
   globalInjection: true,
   locale: initialLocale(),
   fallbackLocale: 'fr',
-  messages: { fr, en, es },
+  messages: {
+    fr,
+    en: { ...en, words: wordsEn },
+    es: { ...es, words: wordsEs },
+  },
 })
 
 document.documentElement.setAttribute('lang', i18n.global.locale.value)

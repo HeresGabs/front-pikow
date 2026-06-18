@@ -3,6 +3,7 @@ import { computed, onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { Trophy, Coins } from 'lucide-vue-next'
 import { getGames, getGamePitches, type Game, type Pitch } from '@/api/games'
+import { useTranslateWord } from '@/composables/useTranslateWord'
 import AppNavbar from '@/components/AppNavbar.vue'
 import BaseSelect from '@/components/ui/BaseSelect.vue'
 import BaseButton from '@/components/ui/BaseButton.vue'
@@ -21,6 +22,7 @@ interface GameDetails {
 }
 
 const { t, locale } = useI18n()
+const translateWord = useTranslateWord()
 
 const loading = ref(true)
 const error = ref('')
@@ -195,7 +197,7 @@ onMounted(load)
                   pitch.playerName
                 }}</span>
                 <span class="font-body text-sm text-pikow-ink/70">
-                  {{ pitch.word1.value }} + {{ pitch.word2.value }}
+                  {{ translateWord(pitch.word1.value) }} + {{ translateWord(pitch.word2.value) }}
                 </span>
                 <span class="flex items-center gap-1 font-body text-sm font-bold text-pikow-ink">
                   <Coins class="size-4 text-pikow-yellow" />{{ pitch.score ?? 0 }}

@@ -6,7 +6,12 @@ import { Play, Pause, RotateCcw, CheckSquare, Eraser, Trash2, AlarmClock } from 
 import { getRandomElements } from '@/api/elements'
 import { useGameStore, type TurnWords } from '@/stores/game'
 import { avatar } from '@/utils/players'
+import { useTranslateWord } from '@/composables/useTranslateWord'
 import ProfileLink from '@/components/ProfileLink.vue'
+import LeaveGameGuard from '@/components/LeaveGameGuard.vue'
+import LanguageSwitcher from '@/components/LanguageSwitcher.vue'
+
+const translateWord = useTranslateWord()
 
 const route = useRoute()
 const router = useRouter()
@@ -85,7 +90,7 @@ function announceTurn(name: string) {
   turnName.value = name
   showTurn.value = true
   if (turnTimeout) clearTimeout(turnTimeout)
-  turnTimeout = setTimeout(() => (showTurn.value = false), 3000)
+  turnTimeout = setTimeout(() => (showTurn.value = false), 1500)
 }
 
 function triggerTimeUp() {
@@ -187,6 +192,8 @@ onBeforeUnmount(() => {
 
 <template>
   <div class="relative min-h-screen bg-pikow-gray px-6 py-8">
+    <LeaveGameGuard />
+
     <Transition
       enter-active-class="transition duration-200"
       enter-from-class="opacity-0"
@@ -219,7 +226,8 @@ onBeforeUnmount(() => {
       </div>
     </Transition>
 
-    <div class="mx-auto mb-4 flex max-w-6xl justify-end">
+    <div class="mx-auto mb-4 flex max-w-6xl justify-end gap-2">
+      <LanguageSwitcher />
       <ProfileLink />
     </div>
 
@@ -239,13 +247,13 @@ onBeforeUnmount(() => {
           <div
             class="flex flex-1 items-center justify-center rounded-2xl bg-pikow-yellow px-4 py-5 text-center font-display text-xl text-pikow-ink"
           >
-            {{ currentWords?.word1.value ?? '…' }}
+            {{ currentWords ? translateWord(currentWords.word1.value) : '…' }}
           </div>
           <span class="self-center font-display text-3xl text-pikow-ink">+</span>
           <div
             class="flex flex-1 items-center justify-center rounded-2xl bg-pikow-red px-4 py-5 text-center font-display text-xl text-white"
           >
-            {{ currentWords?.word2.value ?? '…' }}
+            {{ currentWords ? translateWord(currentWords.word2.value) : '…' }}
           </div>
         </div>
 
