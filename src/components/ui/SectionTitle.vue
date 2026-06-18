@@ -8,10 +8,7 @@ defineProps<{
 
 <template>
   <div class="text-center">
-    <h2
-      class="font-display text-3xl sm:text-4xl"
-      :class="light ? 'text-white' : 'text-pikow-ink'"
-    >
+    <h2 class="font-display text-3xl sm:text-4xl" :class="light ? 'text-white' : 'text-pikow-ink'">
       {{ title }}
     </h2>
     <p

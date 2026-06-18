@@ -35,14 +35,16 @@ const navLinks = [
             improbables.
           </h1>
           <p class="mt-5 max-w-md font-body text-sm text-pikow-ink/70">
-            Inspiré de « Qui veut être mon associé ? », Pikow associe deux objets au hasard… à
-            vous d'en faire le pitch du siècle !
+            Inspiré de « Qui veut être mon associé ? », Pikow associe deux objets au hasard… à vous
+            d'en faire le pitch du siècle !
           </p>
           <div class="mt-8 flex flex-col gap-4 sm:flex-row">
             <BaseButton v-if="auth.isAuthenticated" variant="primary" to="/game/new">
               Lancer une partie
             </BaseButton>
-            <BaseButton v-else variant="primary" to="/register">S'inscrire &amp; jouer !</BaseButton>
+            <BaseButton v-else variant="primary" to="/register"
+              >S'inscrire &amp; jouer !</BaseButton
+            >
             <BaseButton variant="secondary" href="#comment-ca-marche">
               Voir comment ça marche
             </BaseButton>

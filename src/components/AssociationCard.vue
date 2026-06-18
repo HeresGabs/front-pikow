@@ -14,7 +14,7 @@ withDefaults(
     footer: 'A vous de jouer !',
     left: () => ({ name: 'Pizza', emoji: '🍕', color: 'pink' }),
     right: () => ({ name: 'Ballon', emoji: '🏐', color: 'yellow' }),
-  },
+  }
 )
 </script>
 

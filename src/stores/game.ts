@@ -117,5 +117,5 @@ export const useGameStore = defineStore(
   },
   {
     persist: true,
-  },
+  }
 )

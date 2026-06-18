@@ -50,15 +50,14 @@ function distanceKm(a: [number, number], b: [number, number]): number {
   const dLon = toRad(b[1] - a[1])
   const lat1 = toRad(a[0])
   const lat2 = toRad(b[0])
-  const h =
-    Math.sin(dLat / 2) ** 2 + Math.sin(dLon / 2) ** 2 * Math.cos(lat1) * Math.cos(lat2)
+  const h = Math.sin(dLat / 2) ** 2 + Math.sin(dLon / 2) ** 2 * Math.cos(lat1) * Math.cos(lat2)
   return 2 * R * Math.asin(Math.sqrt(h))
 }
 
 function destination(
   origin: [number, number],
   distance: number,
-  bearing: number,
+  bearing: number
 ): [number, number] {
   const R = 6371
   const br = toRad(bearing)
@@ -66,13 +65,13 @@ function destination(
   const lon1 = toRad(origin[1])
   const dr = distance / R
   const lat2 = Math.asin(
-    Math.sin(lat1) * Math.cos(dr) + Math.cos(lat1) * Math.sin(dr) * Math.cos(br),
+    Math.sin(lat1) * Math.cos(dr) + Math.cos(lat1) * Math.sin(dr) * Math.cos(br)
   )
   const lon2 =
     lon1 +
     Math.atan2(
       Math.sin(br) * Math.sin(dr) * Math.cos(lat1),
-      Math.cos(dr) - Math.sin(lat1) * Math.sin(lat2),
+      Math.cos(dr) - Math.sin(lat1) * Math.sin(lat2)
     )
   return [(lat2 * 180) / Math.PI, (lon2 * 180) / Math.PI]
 }
@@ -134,7 +133,7 @@ function locateUser() {
       stores.value = generateStores(center.value)
     },
     () => {},
-    { enableHighAccuracy: true, timeout: 8000 },
+    { enableHighAccuracy: true, timeout: 8000 }
   )
 }
 

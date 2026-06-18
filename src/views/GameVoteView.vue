@@ -20,7 +20,12 @@ async function validate() {
 
   const gameId = String(route.params.id)
   const requests = game.players
-    .map((player, i) => ({ player, words: game.turnWords[i], score: game.votes[i] ?? 0, order: i + 1 }))
+    .map((player, i) => ({
+      player,
+      words: game.turnWords[i],
+      score: game.votes[i] ?? 0,
+      order: i + 1,
+    }))
     .filter((entry) => entry.words)
     .map((entry) =>
       createPitch({
@@ -32,7 +37,7 @@ async function validate() {
         word2Id: entry.words!.word2.id,
         duration: game.duration,
         score: entry.score,
-      }).catch(() => null),
+      }).catch(() => null)
     )
 
   await Promise.all(requests)

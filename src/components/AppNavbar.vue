@@ -15,7 +15,7 @@ withDefaults(
       { label: 'Accueil', href: '/' },
       { label: 'Boutique', href: '#' },
     ],
-  },
+  }
 )
 
 const router = useRouter()

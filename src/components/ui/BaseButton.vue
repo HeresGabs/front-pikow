@@ -10,7 +10,7 @@ const props = withDefaults(
     to?: string
     block?: boolean
   }>(),
-  { variant: 'primary', type: 'button', block: false },
+  { variant: 'primary', type: 'button', block: false }
 )
 
 const variants: Record<string, string> = {

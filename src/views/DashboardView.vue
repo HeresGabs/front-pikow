@@ -100,7 +100,7 @@ async function load() {
           winner: ranking[0]?.name ?? '—',
           topScore: ranking[0]?.score ?? 0,
         }
-      }),
+      })
     )
     games.value = details
   } catch {
@@ -133,7 +133,10 @@ onMounted(load)
         {{ error }}
       </p>
 
-      <div v-else-if="!filtered.length" class="mt-10 rounded-2xl bg-white p-8 text-center shadow-sm">
+      <div
+        v-else-if="!filtered.length"
+        class="mt-10 rounded-2xl bg-white p-8 text-center shadow-sm"
+      >
         <p class="font-body text-pikow-ink/60">Aucune partie pour le moment.</p>
         <div class="mt-4 flex justify-center">
           <BaseButton variant="primary" to="/game/new">Lancer une partie</BaseButton>
@@ -154,8 +157,12 @@ onMounted(load)
               >
                 {{ entry.game.theme }}
               </span>
-              <span class="font-body text-sm text-pikow-ink/60">{{ formatDate(entry.game.date) }}</span>
-              <span class="font-body text-sm text-pikow-ink/60">· {{ entry.game.nbPlayers }} joueurs</span>
+              <span class="font-body text-sm text-pikow-ink/60">{{
+                formatDate(entry.game.date)
+              }}</span>
+              <span class="font-body text-sm text-pikow-ink/60"
+                >· {{ entry.game.nbPlayers }} joueurs</span
+              >
             </div>
             <div class="flex items-center gap-2 font-body text-sm font-bold text-pikow-ink">
               <Trophy class="size-4 text-pikow-yellow" />
@@ -174,7 +181,9 @@ onMounted(load)
                 :key="pitch.id"
                 class="flex flex-wrap items-center justify-between gap-2 rounded-xl bg-pikow-gray px-4 py-2"
               >
-                <span class="font-body text-sm font-bold text-pikow-ink">{{ pitch.playerName }}</span>
+                <span class="font-body text-sm font-bold text-pikow-ink">{{
+                  pitch.playerName
+                }}</span>
                 <span class="font-body text-sm text-pikow-ink/70">
                   {{ pitch.word1.value }} + {{ pitch.word2.value }}
                 </span>

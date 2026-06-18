@@ -16,7 +16,7 @@ const MEDALS = ['🥇', '🥈', '🥉']
 const ranking = computed(() =>
   game.players
     .map((player, index) => ({ player, index, score: game.scores[index] ?? 0 }))
-    .sort((a, b) => b.score - a.score),
+    .sort((a, b) => b.score - a.score)
 )
 
 const maxScore = computed(() => Math.max(1, ...ranking.value.map((r) => r.score)))

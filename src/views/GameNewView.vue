@@ -21,7 +21,7 @@ const VOCABS = [
 ]
 
 const players = reactive(
-  Array.from({ length: 3 }, (_, i) => ({ name: `Joueur ${i + 1}`, age: 18 })),
+  Array.from({ length: 3 }, (_, i) => ({ name: `Joueur ${i + 1}`, age: 18 }))
 )
 const duration = ref(60)
 const vocab = ref('famille')
@@ -59,7 +59,7 @@ async function launch() {
       created.id,
       theme,
       duration.value,
-      players.map((p) => ({ name: p.name.trim(), age: Number(p.age) })),
+      players.map((p) => ({ name: p.name.trim(), age: Number(p.age) }))
     )
     router.push(`/game/${created.id}/pitch`)
   } catch {
