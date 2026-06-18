@@ -18,7 +18,7 @@ const auth = useAuthStore()
 
 const navLinks = [
   { key: 'nav.home', href: '/' },
-  { key: 'nav.shop', href: 'about:blank' },
+  { key: 'nav.shop', href: '/boutique' },
 ]
 </script>
 

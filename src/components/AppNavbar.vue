@@ -1,29 +1,35 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { RouterLink, useRouter } from 'vue-router'
-import { ChevronDown, LogOut, Menu, User, X, LayoutGrid } from 'lucide-vue-next'
+import { ChevronDown, LogOut, Menu, User, X, LayoutGrid, ShoppingCart } from 'lucide-vue-next'
 import { useAuthStore } from '@/stores/auth'
+import { useCartStore } from '@/stores/cart'
 import PikowLogo from './PikowLogo.vue'
 import BaseButton from './ui/BaseButton.vue'
 import LanguageSwitcher from './LanguageSwitcher.vue'
+import CartModal from './CartModal.vue'
 
 withDefaults(
   defineProps<{
     links?: { key: string; href: string }[]
+    showCart?: boolean
   }>(),
   {
     links: () => [
       { key: 'nav.home', href: '/' },
-      { key: 'nav.shop', href: '#' },
+      { key: 'nav.shop', href: '/boutique' },
     ],
+    showCart: false,
   },
 )
 
 const router = useRouter()
 const auth = useAuthStore()
+const cart = useCartStore()
 
 const open = ref(false)
 const userMenu = ref(false)
+const cartOpen = ref(false)
 
 function logout() {
   auth.logout()
@@ -55,7 +61,7 @@ function logout() {
         </BaseButton>
         <div v-if="auth.isAuthenticated" class="relative">
           <button
-            class="flex cursor-pointer items-center gap-2 rounded-full bg-white px-4 py-2 font-body text-sm font-bold text-pikow-ink shadow-sm"
+            class="flex h-11 cursor-pointer items-center gap-2 rounded-full bg-white px-4 font-body text-sm font-bold text-pikow-ink shadow-sm"
             @click="userMenu = !userMenu"
           >
             <User class="size-4 text-pikow-blue" />
@@ -84,6 +90,20 @@ function logout() {
           </div>
         </div>
         <BaseButton v-else variant="primary" to="/login">{{ $t('nav.play') }}</BaseButton>
+        <button
+          v-if="showCart"
+          class="relative flex size-11 cursor-pointer items-center justify-center rounded-full bg-white text-pikow-ink shadow-sm"
+          :aria-label="$t('cart.open')"
+          @click="cartOpen = true"
+        >
+          <ShoppingCart class="size-5" />
+          <span
+            v-if="cart.count"
+            class="absolute -top-1 -right-1 flex size-5 items-center justify-center rounded-full bg-pikow-red text-[10px] font-bold text-white"
+          >
+            {{ cart.count }}
+          </span>
+        </button>
         <LanguageSwitcher />
       </div>
 
@@ -119,7 +139,14 @@ function logout() {
         <BaseButton variant="secondary" block @click="logout">{{ $t('nav.logout') }}</BaseButton>
       </li>
       <li v-else><BaseButton variant="primary" block to="/login">{{ $t('nav.play') }}</BaseButton></li>
+      <li v-if="showCart">
+        <BaseButton variant="secondary" block @click="cartOpen = true">
+          {{ $t('cart.title') }}<span v-if="cart.count"> ({{ cart.count }})</span>
+        </BaseButton>
+      </li>
       <li><LanguageSwitcher /></li>
     </ul>
+
+    <CartModal v-if="showCart && cartOpen" @close="cartOpen = false" />
   </header>
 </template>

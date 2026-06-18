@@ -16,7 +16,7 @@ function choose(value: Locale) {
 <template>
   <div class="relative">
     <button
-      class="flex cursor-pointer items-center gap-1.5 rounded-full bg-white px-3 py-2 font-body text-sm font-bold text-pikow-ink shadow-sm"
+      class="flex h-11 cursor-pointer items-center gap-1.5 rounded-full bg-white px-3 font-body text-sm font-bold text-pikow-ink shadow-sm"
       :aria-label="t('nav.language')"
       @click="open = !open"
     >
