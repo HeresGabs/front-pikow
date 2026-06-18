@@ -16,7 +16,7 @@ jobs:
           node-version: 22
           cache: npm
 
-      - run: npm ci
+      - run: npm install
 
       - name: Prettier check
         run: npx prettier --check "src/**/*.{ts,vue,js}"
