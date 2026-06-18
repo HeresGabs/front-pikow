@@ -1,48 +1,68 @@
-# front-pikow
+# Front-Pikow
 
-This template should help get you started developing with Vue 3 in Vite.
+## Stack Technique
 
-## Recommended IDE Setup
+Le projet est basé sur les technologies modernes suivantes :
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+- **Framework :** Vue 3 + Typescript + vite
+- **Gestion d'état :** Pinia
+- **Style et UI :** Tailwind CSS v4, icônes via Lucide
+- **Internationalisation (i18n) :** Vue I18n
+- **Qualité de code :** ESLint, Prettier
+- **Autres :** Leaflet (pour les cartes), Vue Signature Pad (pour le tableau blanc)
 
-## Recommended Browser Setup
+## Équipe et Répartition des Rôles
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+Le développement a été réparti de la manière suivante :
 
-## Type Support for `.vue` Imports in TS
+- **Gabriel MAILLARD** : Développement Front-end
+- **Lucie FREIHAUT** : Développement Back-end
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+## Installation et Lancement
 
-## Customize configuration
-
-See [Vite Configuration Reference](https://vite.dev/config/).
-
-## Project Setup
+**Prérequis :** Node.js v22+ ou v24+ et npm.
 
 ```sh
+# 1. Installer les dépendances
 npm install
-```
 
-### Compile and Hot-Reload for Development
-
-```sh
+# 2. Lancer le serveur de développement (Hot-Reload)
 npm run dev
-```
 
-### Type-Check, Compile and Minify for Production
-
-```sh
+# 3. Compiler et minifier pour la production
 npm run build
-```
 
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
+# 4. Formater et vérifier le code
 npm run lint
 ```
+
+## Architecture du Projet
+
+```text
+src/
+├── api/          # appels HTTP vers l'API (auth, games, pitches...)
+├── assets/       # Fichiers statiques, feuilles de style globales (CSS), polices, logos
+├── components/   # Composants Vue réutilisables
+│   ├── icons/    # Icônes SVG
+│   └── ui/       # Composants de base (boutons, inputs, sélecteurs...)
+├── composables/  # Hooks (Composables Vue) réutilisables
+├── i18n/         # internationalisation
+├── locales/      # Traductions JSON (FR, EN...) utilisées
+├── plugins/      # Initialisation de modules externes
+├── router/       # Gestion des routes de l'application (Vue Router)
+├── stores/       # Gestion globale de l'état avec Pinia (Auth, Cart, Game...)
+├── utils/        # Fonctions utilitaires, helpers
+├── views/        # Pages complètes associées aux routes (Home, Login, Dashboard...)
+```
+
+## Intégration Continue (CI)
+
+La pipeline est configurée via GitHub Actions.
+
+Cette CI se déclenche automatiquement lors d'un `push` sur les branches `main` et `develop` ou lors d'une `pull_request` vers `main`. Elle fait :
+
+1. Cehck du code
+2. Configuration de Node.js
+3. Installation des dépendances (`npm install`)
+4. Prettier Check : Vérifie que tout le code (TS, Vue, JS) respecte les standards de formatage.
+5. ESLint : Exécute l'analyse statique du code (Linting) pour détecter et prévenir les bugs ou défauts de qualité.
