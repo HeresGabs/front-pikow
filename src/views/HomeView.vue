@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Tablet, Shuffle, Timer, Trophy, Users } from 'lucide-vue-next'
 
+import { useAuthStore } from '@/stores/auth'
 import AppNavbar from '@/components/AppNavbar.vue'
 import AssociationCard from '@/components/AssociationCard.vue'
 import StepCard from '@/components/StepCard.vue'
@@ -12,6 +13,8 @@ import SiteFooter from '@/components/SiteFooter.vue'
 
 import BaseButton from '@/components/ui/BaseButton.vue'
 import SectionTitle from '@/components/ui/SectionTitle.vue'
+
+const auth = useAuthStore()
 
 const navLinks = [
   { label: 'Accueil', href: '/' },
@@ -36,7 +39,10 @@ const navLinks = [
             vous d'en faire le pitch du siècle !
           </p>
           <div class="mt-8 flex flex-col gap-4 sm:flex-row">
-            <BaseButton variant="primary" to="/register">S'inscrire &amp; jouer !</BaseButton>
+            <BaseButton v-if="auth.isAuthenticated" variant="primary" to="/game/new">
+              Lancer une partie
+            </BaseButton>
+            <BaseButton v-else variant="primary" to="/register">S'inscrire &amp; jouer !</BaseButton>
             <BaseButton variant="secondary" href="#comment-ca-marche">
               Voir comment ça marche
             </BaseButton>

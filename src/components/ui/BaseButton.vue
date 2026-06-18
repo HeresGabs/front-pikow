@@ -4,7 +4,7 @@ import { RouterLink } from 'vue-router'
 
 const props = withDefaults(
   defineProps<{
-    variant?: 'primary' | 'secondary' | 'yellow'
+    variant?: 'primary' | 'secondary' | 'yellow' | 'red'
     type?: 'button' | 'submit' | 'reset'
     href?: string
     to?: string
@@ -17,6 +17,7 @@ const variants: Record<string, string> = {
   primary: 'bg-pikow-blue text-white hover:bg-pikow-blue-dark',
   secondary: 'bg-white text-pikow-ink shadow-sm hover:bg-pikow-gray',
   yellow: 'bg-pikow-yellow text-white hover:brightness-95',
+  red: 'bg-pikow-red text-white hover:brightness-95',
 }
 
 const tag = computed(() => (props.to ? RouterLink : props.href ? 'a' : 'button'))

@@ -45,6 +45,12 @@ const router = createRouter({
       meta: { requiresAuth: true },
     },
     {
+      path: '/game/:id/vote',
+      name: 'game-vote',
+      component: () => import('../views/GameVoteView.vue'),
+      meta: { requiresAuth: true },
+    },
+    {
       path: '/game/:id/results',
       name: 'game-results',
       component: () => import('../views/GameResultsView.vue'),

@@ -27,7 +27,7 @@ async function onSubmit() {
   try {
     const { token } = await login({ email: email.value, password: password.value })
     auth.setSession(token, email.value)
-    router.push('/')
+    router.push('/game/new')
   } catch (e) {
     error.value = errorMessage(e)
   } finally {
