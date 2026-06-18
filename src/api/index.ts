@@ -21,10 +21,14 @@ export async function apiFetch<T>(endpoint: string, options: RequestInit = {}): 
     headers,
   })
 
+  const isJson = response.headers.get('content-type')?.includes('json')
+
   if (!response.ok) {
-    const error = await response.json()
-    throw error
+    const body = isJson ? await response.json().catch(() => null) : null
+    throw body ?? { status: response.status, message: `Erreur serveur (${response.status}).` }
   }
 
-  return response.json()
+  if (response.status === 204) return undefined as T
+
+  return (isJson ? response.json() : response.text()) as Promise<T>
 }

@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { RouterLink } from 'vue-router'
 
 const props = withDefaults(
   defineProps<{
     variant?: 'primary' | 'secondary' | 'yellow'
     type?: 'button' | 'submit' | 'reset'
     href?: string
+    to?: string
     block?: boolean
   }>(),
   { variant: 'primary', type: 'button', block: false },
@@ -17,14 +19,16 @@ const variants: Record<string, string> = {
   yellow: 'bg-pikow-yellow text-white hover:brightness-95',
 }
 
+const tag = computed(() => (props.to ? RouterLink : props.href ? 'a' : 'button'))
 const classes = computed(() => [variants[props.variant], props.block ? 'w-full' : ''])
 </script>
 
 <template>
   <component
-    :is="href ? 'a' : 'button'"
+    :is="tag"
+    :to="to"
     :href="href"
-    :type="href ? undefined : type"
+    :type="to || href ? undefined : type"
     class="inline-flex cursor-pointer items-center justify-center rounded-full px-7 py-3 font-body text-sm font-bold transition active:scale-95"
     :class="classes"
   >

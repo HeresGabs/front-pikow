@@ -5,6 +5,7 @@ defineProps<{
   placeholder?: string
   id?: string
   dark?: boolean
+  required?: boolean
 }>()
 
 const model = defineModel<string>()
@@ -18,13 +19,14 @@ const model = defineModel<string>()
       class="mb-2 block font-body text-sm font-bold"
       :class="dark ? 'text-white' : 'text-pikow-ink'"
     >
-      {{ label }}
+      {{ label }}<span v-if="required" class="text-pikow-red">&nbsp;*</span>
     </label>
     <input
       :id="id"
       v-model="model"
       :type="type ?? 'text'"
       :placeholder="placeholder"
+      :required="required"
       class="w-full rounded-full px-5 py-3 font-body text-sm outline-none transition focus:ring-2 focus:ring-pikow-blue/40"
       :class="dark ? 'bg-white text-pikow-ink' : 'bg-pikow-gray text-pikow-ink'"
     />

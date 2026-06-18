@@ -36,7 +36,7 @@ const navLinks = [
             vous d'en faire le pitch du siècle !
           </p>
           <div class="mt-8 flex flex-col gap-4 sm:flex-row">
-            <BaseButton variant="primary">S'inscrire &amp; jouer !</BaseButton>
+            <BaseButton variant="primary" to="/register">S'inscrire &amp; jouer !</BaseButton>
             <BaseButton variant="secondary" href="#comment-ca-marche">
               Voir comment ça marche
             </BaseButton>
