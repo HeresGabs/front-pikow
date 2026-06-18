@@ -11,8 +11,8 @@ const cart = useCartStore()
 const { t } = useI18n()
 
 const PRODUCT_ID = 'impro-rigolow'
-const PRICE = 34.9
-const OLD_PRICE = 44.9
+const PRICE = 12.9
+const OLD_PRICE = 16.5
 const RATING = 4.9
 const RATING_COUNT = 312
 
