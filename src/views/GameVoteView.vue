@@ -6,6 +6,8 @@ import { createPitch } from '@/api/pitches'
 import { useGameStore } from '@/stores/game'
 import { avatar } from '@/utils/players'
 import ProfileLink from '@/components/ProfileLink.vue'
+import LeaveGameGuard from '@/components/LeaveGameGuard.vue'
+import LanguageSwitcher from '@/components/LanguageSwitcher.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -52,8 +54,10 @@ onMounted(() => {
 
 <template>
   <div class="flex min-h-screen flex-col bg-pikow-gray px-6 py-10">
+    <LeaveGameGuard />
     <div class="mx-auto w-full max-w-5xl flex-1">
-      <div class="mb-4 flex justify-end">
+      <div class="mb-4 flex justify-end gap-2">
+        <LanguageSwitcher />
         <ProfileLink />
       </div>
       <div class="flex flex-wrap items-start justify-between gap-4">

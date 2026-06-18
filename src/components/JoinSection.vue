@@ -100,6 +100,7 @@ async function onSubmit() {
           v-model="form.message"
           dark
           required
+          resizable
           :label="$t('common.message')"
           id="join-message"
           :rows="3"
@@ -108,8 +109,8 @@ async function onSubmit() {
           {{ $t('join.consent') }}
         </BaseCheckbox>
 
-        <p v-if="error" class="font-body text-sm font-bold text-white">{{ error }}</p>
-        <p v-if="success" class="font-body text-sm font-bold text-white">
+        <p v-if="error" class="font-body text-sm font-bold text-pikow-red">{{ error }}</p>
+        <p v-if="success" class="font-body text-sm font-bold text-pikow-green">
           {{ $t('join.success') }}
         </p>
 

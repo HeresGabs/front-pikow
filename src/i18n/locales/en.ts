@@ -5,6 +5,7 @@ export default {
     play: 'Play',
     myGames: 'My games',
     logout: 'Log out',
+    login: 'Log in',
     language: 'Change language',
   },
   common: {
@@ -12,6 +13,14 @@ export default {
     loading: 'Loading…',
     email: 'Email',
     message: 'Message',
+    backToTop: 'Back to top',
+    backHome: 'Back to home',
+  },
+  leaveGame: {
+    title: 'Leave the game?',
+    message: 'If you leave now, the current game will not be saved.',
+    stay: 'Stay',
+    leave: 'Leave anyway',
   },
   themes: {
     famille: 'Family',

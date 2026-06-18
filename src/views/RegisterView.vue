@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { RouterLink, useRouter } from 'vue-router'
+import { ArrowLeft } from 'lucide-vue-next'
 import { login, register } from '@/api/auth'
 import { useAuthStore } from '@/stores/auth'
 import PikowLogo from '@/components/PikowLogo.vue'
@@ -40,7 +41,15 @@ async function onSubmit() {
 </script>
 
 <template>
-  <div class="flex min-h-screen flex-col items-center justify-center bg-pikow-gray px-6 py-12">
+  <div class="relative flex min-h-screen flex-col items-center justify-center bg-pikow-gray px-6 py-12">
+    <RouterLink
+      to="/"
+      class="absolute top-6 left-6 flex items-center gap-2 rounded-full bg-white px-4 py-2 font-body text-sm font-bold text-pikow-ink shadow-sm transition hover:bg-pikow-gray"
+    >
+      <ArrowLeft class="size-4" />
+      {{ $t('common.backHome') }}
+    </RouterLink>
+
     <RouterLink to="/"><PikowLogo /></RouterLink>
 
     <div class="mt-8 w-full max-w-md rounded-3xl bg-white p-8 shadow-sm">

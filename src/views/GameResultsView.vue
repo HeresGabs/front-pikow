@@ -7,6 +7,7 @@ import { useGameStore } from '@/stores/game'
 import { avatar } from '@/utils/players'
 import BaseButton from '@/components/ui/BaseButton.vue'
 import ProfileLink from '@/components/ProfileLink.vue'
+import LanguageSwitcher from '@/components/LanguageSwitcher.vue'
 
 const router = useRouter()
 const game = useGameStore()
@@ -54,7 +55,8 @@ onMounted(() => {
 
 <template>
   <div class="flex min-h-screen flex-col items-center bg-pikow-blue px-6 py-12 text-white">
-    <div class="mb-6 flex w-full max-w-3xl justify-end">
+    <div class="mb-6 flex w-full max-w-3xl justify-end gap-2">
+      <LanguageSwitcher />
       <ProfileLink light />
     </div>
     <div class="w-full max-w-3xl text-center">

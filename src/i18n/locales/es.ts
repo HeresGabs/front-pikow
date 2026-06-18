@@ -5,6 +5,7 @@ export default {
     play: 'Jugar',
     myGames: 'Mis partidas',
     logout: 'Cerrar sesión',
+    login: 'Iniciar sesión',
     language: 'Cambiar idioma',
   },
   common: {
@@ -12,6 +13,14 @@ export default {
     loading: 'Cargando…',
     email: 'Correo',
     message: 'Mensaje',
+    backToTop: 'Volver arriba',
+    backHome: 'Volver al inicio',
+  },
+  leaveGame: {
+    title: '¿Salir de la partida?',
+    message: 'Si sales ahora, la partida en curso no se guardará.',
+    stay: 'Quedarme',
+    leave: 'Salir igualmente',
   },
   themes: {
     famille: 'Familia',

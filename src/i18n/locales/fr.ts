@@ -5,6 +5,7 @@ export default {
     play: 'Jouer',
     myGames: 'Mes parties',
     logout: 'Se déconnecter',
+    login: 'Se connecter',
     language: 'Changer de langue',
   },
   common: {
@@ -12,6 +13,14 @@ export default {
     loading: 'Chargement…',
     email: 'Email',
     message: 'Message',
+    backToTop: 'Revenir en haut',
+    backHome: 'Retour à l’accueil',
+  },
+  leaveGame: {
+    title: 'Quitter la partie ?',
+    message: 'Si vous quittez maintenant, la partie en cours ne sera pas enregistrée.',
+    stay: 'Rester',
+    leave: 'Quitter quand même',
   },
   themes: {
     famille: 'Famille',

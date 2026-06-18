@@ -89,7 +89,10 @@ function logout() {
             </button>
           </div>
         </div>
-        <BaseButton v-else variant="primary" to="/login">{{ $t('nav.play') }}</BaseButton>
+        <template v-else>
+          <BaseButton variant="secondary" to="/login">{{ $t('nav.login') }}</BaseButton>
+          <BaseButton variant="primary" to="/register">{{ $t('nav.play') }}</BaseButton>
+        </template>
         <button
           v-if="showCart"
           class="relative flex size-11 cursor-pointer items-center justify-center rounded-full bg-white text-pikow-ink shadow-sm"
@@ -138,7 +141,10 @@ function logout() {
       <li v-if="auth.isAuthenticated">
         <BaseButton variant="secondary" block @click="logout">{{ $t('nav.logout') }}</BaseButton>
       </li>
-      <li v-else><BaseButton variant="primary" block to="/login">{{ $t('nav.play') }}</BaseButton></li>
+      <template v-else>
+        <li><BaseButton variant="secondary" block to="/login">{{ $t('nav.login') }}</BaseButton></li>
+        <li><BaseButton variant="primary" block to="/register">{{ $t('nav.play') }}</BaseButton></li>
+      </template>
       <li v-if="showCart">
         <BaseButton variant="secondary" block @click="cartOpen = true">
           {{ $t('cart.title') }}<span v-if="cart.count"> ({{ cart.count }})</span>

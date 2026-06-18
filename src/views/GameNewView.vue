@@ -8,6 +8,7 @@ import { useGameStore } from '@/stores/game'
 import { avatar } from '@/utils/players'
 import BaseButton from '@/components/ui/BaseButton.vue'
 import ProfileLink from '@/components/ProfileLink.vue'
+import LanguageSwitcher from '@/components/LanguageSwitcher.vue'
 
 const router = useRouter()
 const game = useGameStore()
@@ -23,7 +24,10 @@ const VOCABS = [
 ]
 
 const players = reactive(
-  Array.from({ length: 3 }, (_, i) => ({ name: `${t('gameNew.defaultPlayer')} ${i + 1}`, age: 18 }))
+  Array.from({ length: MIN_PLAYERS }, (_, i) => ({
+    name: `${t('gameNew.defaultPlayer')} ${i + 1}`,
+    age: 18,
+  }))
 )
 const duration = ref(60)
 const vocab = ref('famille')
@@ -83,7 +87,10 @@ async function launch() {
             {{ $t('gameNew.subtitle') }}
           </p>
         </div>
-        <ProfileLink />
+        <div class="flex items-center gap-2">
+          <LanguageSwitcher />
+          <ProfileLink />
+        </div>
       </div>
 
       <div class="mt-8 grid gap-8 lg:grid-cols-3">
