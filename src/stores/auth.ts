@@ -1,33 +1,29 @@
-const BASE_URL = import.meta.env.VITE_API_URL
+import { defineStore } from 'pinia'
+import { computed, ref } from 'vue'
 
-function getToken(): string | null {
-  const auth = localStorage.getItem('auth')
-  if (!auth) return null
-  try {
-    return JSON.parse(auth).token ?? null
-  } catch {
-    return null
-  }
-}
+export const useAuthStore = defineStore(
+  'auth',
+  () => {
+    const token = ref<string | null>(null)
 
-export async function apiFetch<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
-  const token = getToken()
+    const isAuthenticated = computed(() => !!token.value)
 
-  const headers: HeadersInit = {
-    'Content-Type': 'application/json',
-    ...(token ? { Authorization: `Bearer ${token}` } : {}),
-    ...options.headers,
-  }
+    function setToken(value: string) {
+      token.value = value
+    }
 
-  const response = await fetch(`${BASE_URL}${endpoint}`, {
-    ...options,
-    headers,
-  })
+    function logout() {
+      token.value = null
+    }
 
-  if (!response.ok) {
-    const error = await response.json()
-    throw error
-  }
-
-  return response.json()
-}
+    return {
+      token,
+      isAuthenticated,
+      setToken,
+      logout,
+    }
+  },
+  {
+    persist: true,
+  },
+)
