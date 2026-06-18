@@ -29,7 +29,11 @@ const navLinks = [
     <section class="bg-pikow-gray px-6 py-14 sm:py-20">
       <div class="mx-auto grid max-w-6xl items-center gap-10 md:grid-cols-2">
         <div>
-          <i18n-t keypath="hero.title" tag="h1" class="font-display text-4xl leading-tight sm:text-5xl">
+          <i18n-t
+            keypath="hero.title"
+            tag="h1"
+            class="font-display text-4xl leading-tight sm:text-5xl"
+          >
             <template #highlight>
               <span class="text-pikow-blue">{{ $t('hero.highlight') }}</span>
             </template>
@@ -41,7 +45,9 @@ const navLinks = [
             <BaseButton v-if="auth.isAuthenticated" variant="primary" to="/game/new">
               {{ $t('hero.startGame') }}
             </BaseButton>
-            <BaseButton v-else variant="primary" to="/register">{{ $t('hero.register') }}</BaseButton>
+            <BaseButton v-else variant="primary" to="/register">{{
+              $t('hero.register')
+            }}</BaseButton>
             <BaseButton variant="secondary" href="#comment-ca-marche">
               {{ $t('hero.howItWorks') }}
             </BaseButton>

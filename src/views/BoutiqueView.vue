@@ -49,7 +49,11 @@ function addToCart() {
           <div
             class="relative flex aspect-square w-full items-center justify-center overflow-hidden rounded-3xl bg-pikow-blue"
           >
-            <img :src="boitePikow" :alt="$t('shop.productName')" class="h-full w-full object-cover" />
+            <img
+              :src="boitePikow"
+              :alt="$t('shop.productName')"
+              class="h-full w-full object-cover"
+            />
           </div>
         </div>
 
@@ -71,7 +75,9 @@ function addToCart() {
             <span class="font-body text-lg text-pikow-ink/40 line-through">{{
               price(OLD_PRICE)
             }}</span>
-            <span class="rounded-full bg-pikow-red px-2.5 py-1 font-body text-xs font-bold text-white">
+            <span
+              class="rounded-full bg-pikow-red px-2.5 py-1 font-body text-xs font-bold text-white"
+            >
               -{{ discount }}%
             </span>
           </div>
@@ -93,7 +99,9 @@ function addToCart() {
                 <Plus class="size-4" />
               </button>
             </div>
-            <span class="font-body text-sm font-bold text-pikow-teal">{{ $t('shop.inStock') }}</span>
+            <span class="font-body text-sm font-bold text-pikow-teal">{{
+              $t('shop.inStock')
+            }}</span>
           </div>
 
           <button
@@ -104,7 +112,9 @@ function addToCart() {
           </button>
 
           <div class="mt-4 flex flex-wrap gap-6 font-body text-sm text-pikow-ink/60">
-            <span class="flex items-center gap-2"><Truck class="size-4" /> {{ $t('shop.delivery') }}</span>
+            <span class="flex items-center gap-2"
+              ><Truck class="size-4" /> {{ $t('shop.delivery') }}</span
+            >
             <span class="flex items-center gap-2">
               <ShieldCheck class="size-4" /> {{ $t('shop.securePayment') }}
             </span>

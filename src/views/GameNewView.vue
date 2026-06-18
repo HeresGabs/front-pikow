@@ -82,7 +82,9 @@ async function launch() {
     <div class="mx-auto max-w-6xl">
       <div class="flex items-start justify-between gap-4">
         <div>
-          <h1 class="font-display text-3xl text-pikow-ink sm:text-4xl">{{ $t('gameNew.title') }}</h1>
+          <h1 class="font-display text-3xl text-pikow-ink sm:text-4xl">
+            {{ $t('gameNew.title') }}
+          </h1>
           <p class="mt-1 font-body text-sm text-pikow-ink/60">
             {{ $t('gameNew.subtitle') }}
           </p>

@@ -40,7 +40,9 @@ async function onSubmit() {
 </script>
 
 <template>
-  <div class="relative flex min-h-screen flex-col items-center justify-center bg-pikow-gray px-6 py-12">
+  <div
+    class="relative flex min-h-screen flex-col items-center justify-center bg-pikow-gray px-6 py-12"
+  >
     <RouterLink
       to="/"
       class="absolute top-6 left-6 flex items-center gap-2 rounded-full bg-white px-4 py-2 font-body text-sm font-bold text-pikow-ink shadow-sm transition hover:bg-pikow-gray"

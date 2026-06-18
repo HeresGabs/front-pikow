@@ -39,5 +39,5 @@ export const useCartStore = defineStore(
   },
   {
     persist: true,
-  },
+  }
 )

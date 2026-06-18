@@ -129,7 +129,12 @@ onMounted(load)
       </p>
 
       <div class="mt-6 grid gap-4 sm:grid-cols-2">
-        <BaseSelect v-model="sort" :label="$t('dashboard.sortBy')" id="dash-sort" :options="SORTS" />
+        <BaseSelect
+          v-model="sort"
+          :label="$t('dashboard.sortBy')"
+          id="dash-sort"
+          :options="SORTS"
+        />
         <BaseSelect
           v-model="themeFilter"
           :label="$t('dashboard.theme')"
@@ -186,7 +191,9 @@ onMounted(load)
           </div>
 
           <div v-if="entry.pitches.length" class="mt-4 border-t border-black/5 pt-4">
-            <p class="mb-2 font-body text-xs font-bold text-pikow-ink/50">{{ $t('dashboard.rounds') }}</p>
+            <p class="mb-2 font-body text-xs font-bold text-pikow-ink/50">
+              {{ $t('dashboard.rounds') }}
+            </p>
             <ul class="flex flex-col gap-2">
               <li
                 v-for="pitch in entry.pitches"

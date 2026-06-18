@@ -20,7 +20,7 @@ withDefaults(
       { key: 'nav.shop', href: '/boutique' },
     ],
     showCart: false,
-  },
+  }
 )
 
 const router = useRouter()
@@ -110,7 +110,11 @@ function logout() {
         <LanguageSwitcher />
       </div>
 
-      <button class="text-pikow-ink md:hidden" :aria-label="$t('nav.language')" @click="open = !open">
+      <button
+        class="text-pikow-ink md:hidden"
+        :aria-label="$t('nav.language')"
+        @click="open = !open"
+      >
         <X v-if="open" class="size-7" />
         <Menu v-else class="size-7" />
       </button>
@@ -142,8 +146,12 @@ function logout() {
         <BaseButton variant="secondary" block @click="logout">{{ $t('nav.logout') }}</BaseButton>
       </li>
       <template v-else>
-        <li><BaseButton variant="secondary" block to="/login">{{ $t('nav.login') }}</BaseButton></li>
-        <li><BaseButton variant="primary" block to="/register">{{ $t('nav.play') }}</BaseButton></li>
+        <li>
+          <BaseButton variant="secondary" block to="/login">{{ $t('nav.login') }}</BaseButton>
+        </li>
+        <li>
+          <BaseButton variant="primary" block to="/register">{{ $t('nav.play') }}</BaseButton>
+        </li>
       </template>
       <li v-if="showCart">
         <BaseButton variant="secondary" block @click="cartOpen = true">

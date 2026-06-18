@@ -214,7 +214,11 @@ onBeforeUnmount(() => {
 
       <div class="mt-8 flex flex-col items-center gap-4">
         <div class="relative z-20 w-full max-w-md">
-          <SearchBar v-model="search" :placeholder="$t('stores.searchPlaceholder')" @keyup.enter="onSearch" />
+          <SearchBar
+            v-model="search"
+            :placeholder="$t('stores.searchPlaceholder')"
+            @keyup.enter="onSearch"
+          />
           <ul
             v-if="suggestions.length"
             class="absolute top-full left-0 mt-2 w-full overflow-hidden rounded-2xl bg-white shadow-lg"
