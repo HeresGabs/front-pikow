@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { RouterLink, useRouter } from 'vue-router'
 import { login, register } from '@/api/auth'
 import { useAuthStore } from '@/stores/auth'
@@ -9,6 +10,7 @@ import BaseButton from '@/components/ui/BaseButton.vue'
 
 const router = useRouter()
 const auth = useAuthStore()
+const { t } = useI18n()
 
 const email = ref('')
 const password = ref('')
@@ -18,7 +20,7 @@ const loading = ref(false)
 function errorMessage(e: unknown): string {
   const err = e as { violations?: { message: string }[]; message?: string }
   if (err?.violations?.length) return err.violations.map((v) => v.message).join(' ')
-  return err?.message ?? 'Une erreur est survenue, réessaie.'
+  return err?.message ?? t('auth.registerError')
 }
 
 async function onSubmit() {
@@ -42,35 +44,37 @@ async function onSubmit() {
     <RouterLink to="/"><PikowLogo /></RouterLink>
 
     <div class="mt-8 w-full max-w-md rounded-3xl bg-white p-8 shadow-sm">
-      <h1 class="font-display text-2xl text-pikow-ink">Créer un compte</h1>
+      <h1 class="font-display text-2xl text-pikow-ink">{{ $t('auth.registerTitle') }}</h1>
       <p class="mt-1 font-body text-sm text-pikow-ink/60">
-        Inscris-toi et lance ta première partie.
+        {{ $t('auth.registerSubtitle') }}
       </p>
 
       <form class="mt-6 flex flex-col gap-4" @submit.prevent="onSubmit">
         <BaseInput
           v-model="email"
           type="email"
-          label="Email"
+          :label="$t('auth.emailLabel')"
           id="register-email"
-          placeholder="hello@pikow.fr"
+          :placeholder="$t('auth.emailPlaceholder')"
         />
         <BaseInput
           v-model="password"
           type="password"
-          label="Mot de passe"
+          :label="$t('auth.passwordLabel')"
           id="register-password"
-          placeholder="••••••••"
+          :placeholder="$t('auth.passwordPlaceholder')"
         />
         <p v-if="error" class="font-body text-sm font-bold text-pikow-red">{{ error }}</p>
         <BaseButton type="submit" variant="primary" block>
-          {{ loading ? 'Création…' : "S'inscrire & jouer !" }}
+          {{ loading ? $t('auth.registerSubmitting') : $t('auth.registerSubmit') }}
         </BaseButton>
       </form>
 
       <p class="mt-6 text-center font-body text-sm text-pikow-ink/60">
-        Déjà un compte ?
-        <RouterLink to="/login" class="font-bold text-pikow-blue">Se connecter</RouterLink>
+        {{ $t('auth.registerHave') }}
+        <RouterLink to="/login" class="font-bold text-pikow-blue">{{
+          $t('auth.registerLogin')
+        }}</RouterLink>
       </p>
     </div>
   </div>

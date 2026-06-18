@@ -15,6 +15,6 @@ withDefaults(defineProps<{ light?: boolean }>(), { light: false })
     "
   >
     <UserRound class="size-4" />
-    Profil
+    {{ $t('common.profile') }}
   </RouterLink>
 </template>

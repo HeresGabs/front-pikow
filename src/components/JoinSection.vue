@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { reactive, ref } from 'vue'
+import { computed, reactive, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { sendContact } from '@/api/contact'
 import SectionTitle from './ui/SectionTitle.vue'
 import BaseInput from './ui/BaseInput.vue'
@@ -8,10 +9,12 @@ import BaseTextarea from './ui/BaseTextarea.vue'
 import BaseCheckbox from './ui/BaseCheckbox.vue'
 import BaseButton from './ui/BaseButton.vue'
 
-const motifs = [
-  { label: 'Contact', value: 'contact' },
-  { label: 'Commande pour une entreprise', value: 'revendeur' },
-]
+const { t } = useI18n()
+
+const motifs = computed(() => [
+  { label: t('join.motifContact'), value: 'contact' },
+  { label: t('join.motifCompany'), value: 'revendeur' },
+])
 
 const form = reactive({
   motif: 'contact',
@@ -28,7 +31,7 @@ const success = ref(false)
 function errorMessage(e: unknown): string {
   const err = e as { violations?: { message: string }[]; message?: string }
   if (err?.violations?.length) return err.violations.map((v) => v.message).join(' ')
-  return err?.message ?? 'Une erreur est survenue, réessaie.'
+  return err?.message ?? t('join.errorGeneric')
 }
 
 async function onSubmit() {
@@ -36,7 +39,7 @@ async function onSubmit() {
   success.value = false
 
   if (!form.consent) {
-    error.value = 'Merci de cocher la case pour accepter le traitement de vos données.'
+    error.value = t('join.errorConsent')
     return
   }
 
@@ -65,28 +68,30 @@ async function onSubmit() {
 <template>
   <section class="bg-pikow-blue px-6 py-14">
     <div class="mx-auto max-w-3xl">
-      <SectionTitle
-        light
-        title="Nous rejoindre"
-        subtitle="Contactez nous pour discuter de nouvelles opportunités"
-      />
+      <SectionTitle light :title="$t('join.title')" :subtitle="$t('join.subtitle')" />
 
       <form class="mt-8 flex flex-col gap-5" @submit.prevent="onSubmit">
-        <BaseSelect v-model="form.motif" dark label="Motif" id="join-motif" :options="motifs" />
+        <BaseSelect
+          v-model="form.motif"
+          dark
+          :label="$t('join.motif')"
+          id="join-motif"
+          :options="motifs"
+        />
         <div class="grid gap-5" :class="form.motif === 'revendeur' ? 'sm:grid-cols-2' : ''">
           <BaseInput
             v-if="form.motif === 'revendeur'"
             v-model="form.company"
             dark
             required
-            label="Société"
+            :label="$t('join.company')"
             id="join-company"
           />
           <BaseInput
             v-model="form.email"
             dark
             required
-            label="Email"
+            :label="$t('common.email')"
             id="join-email"
             type="email"
           />
@@ -95,23 +100,22 @@ async function onSubmit() {
           v-model="form.message"
           dark
           required
-          label="Message"
+          :label="$t('common.message')"
           id="join-message"
           :rows="3"
         />
         <BaseCheckbox v-model="form.consent" dark>
-          En cochant cette case, j'accepte que les données saisies soient utilisées par Pikow pour
-          traiter ma demande et m'apporter une réponse.
+          {{ $t('join.consent') }}
         </BaseCheckbox>
 
         <p v-if="error" class="font-body text-sm font-bold text-white">{{ error }}</p>
         <p v-if="success" class="font-body text-sm font-bold text-white">
-          Merci ! Votre message a bien été envoyé.
+          {{ $t('join.success') }}
         </p>
 
         <div class="flex justify-center">
           <BaseButton type="submit" variant="yellow">
-            {{ loading ? 'Envoi…' : 'Rejoindre' }}
+            {{ loading ? $t('join.submitting') : $t('join.submit') }}
           </BaseButton>
         </div>
       </form>

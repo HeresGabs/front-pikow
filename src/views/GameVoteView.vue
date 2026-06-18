@@ -58,9 +58,9 @@ onMounted(() => {
       </div>
       <div class="flex flex-wrap items-start justify-between gap-4">
         <div>
-          <h1 class="font-display text-3xl text-pikow-ink sm:text-4xl">Attribuez vos jetons</h1>
+          <h1 class="font-display text-3xl text-pikow-ink sm:text-4xl">{{ $t('gameVote.title') }}</h1>
           <p class="mt-1 font-body text-sm text-pikow-ink/60">
-            Donnez vos jetons à l'idée la plus convaincante ou la plus drôle.
+            {{ $t('gameVote.subtitle') }}
           </p>
         </div>
         <div class="flex items-center gap-3 rounded-2xl bg-pikow-yellow px-5 py-3">
@@ -69,7 +69,7 @@ onMounted(() => {
             <p class="font-display text-2xl leading-none text-pikow-ink">
               {{ game.remainingTokens }}
             </p>
-            <p class="font-body text-xs text-pikow-ink/70">jetons restants</p>
+            <p class="font-body text-xs text-pikow-ink/70">{{ $t('gameVote.tokensLeft') }}</p>
           </div>
         </div>
       </div>
@@ -112,9 +112,7 @@ onMounted(() => {
         v-if="game.remainingTokens > 0"
         class="mb-3 text-center font-body text-sm text-pikow-ink/60"
       >
-        Distribuez tous vos jetons pour valider ({{ game.remainingTokens }} restant{{
-          game.remainingTokens > 1 ? 's' : ''
-        }}).
+        {{ $t('gameVote.distributeAll') }} ({{ game.remainingTokens }})
       </p>
       <button
         class="flex w-full items-center justify-center gap-2 rounded-full bg-pikow-red px-7 py-3 font-body text-sm font-bold text-white transition hover:brightness-95 active:scale-95 disabled:cursor-not-allowed disabled:opacity-40"
@@ -123,7 +121,7 @@ onMounted(() => {
         @click="validate"
       >
         <Trophy class="size-5" />
-        {{ saving ? 'Enregistrement…' : 'Valider & voir les scores' }}
+        {{ saving ? $t('gameVote.saving') : $t('gameVote.validate') }}
       </button>
     </div>
   </div>

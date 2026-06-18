@@ -59,8 +59,10 @@ onMounted(() => {
     </div>
     <div class="w-full max-w-3xl text-center">
       <Crown class="mx-auto size-10 text-pikow-yellow" />
-      <h1 class="mt-3 font-display text-3xl sm:text-4xl">{{ winner }} remporte la partie !</h1>
-      <p class="mt-1 font-body text-sm text-white/80">Le meilleur entrepreneur du jour 🎉</p>
+      <h1 class="mt-3 font-display text-3xl sm:text-4xl">
+        {{ $t('gameResults.winner', { name: winner }) }}
+      </h1>
+      <p class="mt-1 font-body text-sm text-white/80">{{ $t('gameResults.subtitle') }}</p>
 
       <div class="mt-8 flex flex-col gap-3">
         <div
@@ -89,11 +91,11 @@ onMounted(() => {
       <div class="mt-10 flex flex-col justify-center gap-4 sm:flex-row">
         <BaseButton variant="yellow" @click="replay">
           <RefreshCw class="mr-2 size-5" />
-          {{ replaying ? 'Création…' : 'Rejouer (mêmes joueurs)' }}
+          {{ replaying ? $t('gameResults.replaying') : $t('gameResults.replay') }}
         </BaseButton>
         <BaseButton variant="secondary" @click="newGame">
           <RotateCcw class="mr-2 size-5" />
-          Nouvelle partie
+          {{ $t('gameResults.newGame') }}
         </BaseButton>
       </div>
     </div>

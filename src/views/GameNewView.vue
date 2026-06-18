@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, reactive, ref, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import { Clock, Minus, Plus, Play } from 'lucide-vue-next'
 import { createGame } from '@/api/games'
@@ -10,18 +11,19 @@ import ProfileLink from '@/components/ProfileLink.vue'
 
 const router = useRouter()
 const game = useGameStore()
+const { t } = useI18n()
 
 const MIN_PLAYERS = 2
 const MAX_PLAYERS = 8
 const DURATIONS = [30, 60, 120]
 const VOCABS = [
-  { label: 'Famille', value: 'famille' },
-  { label: 'Business', value: 'business' },
-  { label: 'Spicy', value: 'spicy' },
+  { label: 'famille', value: 'famille' },
+  { label: 'business', value: 'business' },
+  { label: 'spicy', value: 'spicy' },
 ]
 
 const players = reactive(
-  Array.from({ length: 3 }, (_, i) => ({ name: `Joueur ${i + 1}`, age: 18 }))
+  Array.from({ length: 3 }, (_, i) => ({ name: `${t('gameNew.defaultPlayer')} ${i + 1}`, age: 18 }))
 )
 const duration = ref(60)
 const vocab = ref('famille')
@@ -36,18 +38,19 @@ watch(allAdults, (adults) => {
 
 function setCount(count: number) {
   const next = Math.min(MAX_PLAYERS, Math.max(MIN_PLAYERS, count))
-  while (players.length < next) players.push({ name: `Joueur ${players.length + 1}`, age: 18 })
+  while (players.length < next)
+    players.push({ name: `${t('gameNew.defaultPlayer')} ${players.length + 1}`, age: 18 })
   while (players.length > next) players.pop()
 }
 
 async function launch() {
   error.value = ''
   if (players.some((p) => !p.name.trim())) {
-    error.value = 'Chaque joueur doit avoir un nom.'
+    error.value = t('gameNew.errName')
     return
   }
   if (players.some((p) => !p.age || Number(p.age) < 1)) {
-    error.value = 'Chaque joueur doit avoir un âge valide.'
+    error.value = t('gameNew.errAge')
     return
   }
 
@@ -63,7 +66,7 @@ async function launch() {
     )
     router.push(`/game/${created.id}/pitch`)
   } catch {
-    error.value = 'Impossible de créer la partie. Réessaie.'
+    error.value = t('gameNew.errCreate')
   } finally {
     loading.value = false
   }
@@ -75,9 +78,9 @@ async function launch() {
     <div class="mx-auto max-w-6xl">
       <div class="flex items-start justify-between gap-4">
         <div>
-          <h1 class="font-display text-3xl text-pikow-ink sm:text-4xl">Nouvelle partie</h1>
+          <h1 class="font-display text-3xl text-pikow-ink sm:text-4xl">{{ $t('gameNew.title') }}</h1>
           <p class="mt-1 font-body text-sm text-pikow-ink/60">
-            Renseignez chaque joueur. L'âge adapte le vocabulaire et la difficulté.
+            {{ $t('gameNew.subtitle') }}
           </p>
         </div>
         <ProfileLink />
@@ -86,7 +89,9 @@ async function launch() {
       <div class="mt-8 grid gap-8 lg:grid-cols-3">
         <div class="lg:col-span-2">
           <div class="flex items-center justify-between">
-            <h2 class="font-display text-xl text-pikow-ink">Joueurs ({{ players.length }})</h2>
+            <h2 class="font-display text-xl text-pikow-ink">
+              {{ $t('gameNew.playersLabel') }} ({{ players.length }})
+            </h2>
             <div class="flex items-center gap-3 rounded-full bg-white px-3 py-1.5 shadow-sm">
               <button
                 class="flex size-8 cursor-pointer items-center justify-center rounded-full bg-pikow-gray text-pikow-ink disabled:opacity-40"
@@ -117,11 +122,11 @@ async function launch() {
                 <input
                   v-model="player.name"
                   type="text"
-                  placeholder="Nom du joueur"
+                  :placeholder="$t('gameNew.namePlaceholder')"
                   class="w-full rounded-full bg-pikow-gray px-4 py-2 font-body text-sm outline-none focus:ring-2 focus:ring-pikow-blue/40"
                 />
                 <div class="mt-2 flex items-center gap-2">
-                  <span class="font-body text-xs text-pikow-ink/50">Âge</span>
+                  <span class="font-body text-xs text-pikow-ink/50">{{ $t('gameNew.age') }}</span>
                   <input
                     v-model.number="player.age"
                     type="number"
@@ -136,7 +141,7 @@ async function launch() {
 
         <div class="flex flex-col gap-5">
           <div v-if="allAdults" class="rounded-2xl bg-white p-5 shadow-sm">
-            <p class="font-display text-base text-pikow-ink">Vocabulaire</p>
+            <p class="font-display text-base text-pikow-ink">{{ $t('gameNew.vocab') }}</p>
             <div class="mt-3 flex flex-wrap gap-2">
               <button
                 v-for="v in VOCABS"
@@ -147,7 +152,7 @@ async function launch() {
                 "
                 @click="vocab = v.value"
               >
-                {{ v.label }}
+                {{ $t(`themes.${v.label}`) }}
               </button>
             </div>
           </div>
@@ -155,7 +160,7 @@ async function launch() {
           <div class="rounded-2xl bg-white p-5 shadow-sm">
             <p class="flex items-center gap-2 font-display text-base text-pikow-ink">
               <Clock class="size-5" />
-              Durée du pitch
+              {{ $t('gameNew.duration') }}
             </p>
             <div class="mt-3 flex gap-2">
               <button
@@ -179,7 +184,7 @@ async function launch() {
       <div class="mt-8">
         <BaseButton variant="red" @click="launch">
           <Play class="mr-2 size-5" />
-          {{ loading ? 'Création…' : 'Lancer la partie' }}
+          {{ loading ? $t('gameNew.starting') : $t('gameNew.start') }}
         </BaseButton>
       </div>
     </div>

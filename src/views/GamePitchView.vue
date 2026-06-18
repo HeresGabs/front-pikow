@@ -198,7 +198,7 @@ onBeforeUnmount(() => {
         class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-pikow-blue text-center text-white"
       >
         <span class="text-7xl">{{ avatar(game.currentPitchIndex) }}</span>
-        <p class="mt-4 font-body text-lg opacity-90">Au tour de</p>
+        <p class="mt-4 font-body text-lg opacity-90">{{ $t('gamePitch.turnOf') }}</p>
         <p class="font-display text-5xl">{{ turnName }}</p>
       </div>
     </Transition>
@@ -214,8 +214,8 @@ onBeforeUnmount(() => {
         class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-pikow-red text-center text-white"
       >
         <AlarmClock class="size-16" />
-        <p class="mt-4 font-display text-5xl">Temps écoulé !</p>
-        <p class="mt-2 font-body text-lg opacity-90">Le pitch est terminé.</p>
+        <p class="mt-4 font-display text-5xl">{{ $t('gamePitch.timeUp') }}</p>
+        <p class="mt-2 font-body text-lg opacity-90">{{ $t('gamePitch.pitchOver') }}</p>
       </div>
     </Transition>
 
@@ -226,8 +226,13 @@ onBeforeUnmount(() => {
     <div class="mx-auto grid max-w-6xl gap-8 lg:grid-cols-[1fr_340px]">
       <div>
         <p class="font-body text-sm font-bold text-pikow-ink/60">
-          Pitch {{ game.currentPitchIndex + 1 }} / {{ game.players.length }} · Au tour de
-          {{ game.currentPlayer?.name }}
+          {{
+            $t('gamePitch.header', {
+              i: game.currentPitchIndex + 1,
+              total: game.players.length,
+              name: game.currentPlayer?.name,
+            })
+          }}
         </p>
 
         <div class="mt-4 flex items-stretch gap-3">
@@ -276,14 +281,14 @@ onBeforeUnmount(() => {
               @click="toggleEraser"
             >
               <Eraser class="size-4" />
-              Gomme
+              {{ $t('gamePitch.eraser') }}
             </button>
             <button
               class="ml-auto flex cursor-pointer items-center gap-1.5 rounded-full bg-pikow-red px-3 py-1.5 font-body text-xs font-bold text-white transition hover:brightness-95"
               @click="clearBoard"
             >
               <Trash2 class="size-4" />
-              Tout effacer
+              {{ $t('gamePitch.clearAll') }}
             </button>
           </div>
 
@@ -295,13 +300,13 @@ onBeforeUnmount(() => {
         </div>
 
         <p v-if="drawing" class="mt-3 text-center font-body text-sm text-pikow-ink/50">
-          Tirage des mots…
+          {{ $t('gamePitch.drawing') }}
         </p>
       </div>
 
       <div class="flex flex-col gap-4">
         <div class="rounded-3xl bg-pikow-teal p-6 text-center text-white">
-          <p class="font-body text-sm opacity-90">Temps de pitch</p>
+          <p class="font-body text-sm opacity-90">{{ $t('gamePitch.pitchTime') }}</p>
           <p class="font-display text-5xl">{{ minutes }}:{{ seconds }}</p>
           <div class="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-white/30">
             <div
@@ -331,7 +336,7 @@ onBeforeUnmount(() => {
           @click="advance"
         >
           <CheckSquare class="size-5" />
-          {{ game.isLastPitch ? 'Passer au vote' : 'Joueur suivant' }}
+          {{ game.isLastPitch ? $t('gamePitch.toVote') : $t('gamePitch.nextPlayer') }}
         </button>
       </div>
     </div>

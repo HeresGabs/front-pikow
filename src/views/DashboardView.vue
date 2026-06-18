@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { Trophy, Coins } from 'lucide-vue-next'
 import { getGames, getGamePitches, type Game, type Pitch } from '@/api/games'
 import AppNavbar from '@/components/AppNavbar.vue'
@@ -19,6 +20,8 @@ interface GameDetails {
   topScore: number
 }
 
+const { t, locale } = useI18n()
+
 const loading = ref(true)
 const error = ref('')
 const games = ref<GameDetails[]>([])
@@ -26,18 +29,18 @@ const games = ref<GameDetails[]>([])
 const sort = ref('recent')
 const themeFilter = ref('all')
 
-const SORTS = [
-  { label: 'Plus récentes', value: 'recent' },
-  { label: 'Plus anciennes', value: 'old' },
-  { label: 'Meilleur score', value: 'score-desc' },
-  { label: 'Plus petit score', value: 'score-asc' },
-]
-const THEMES = [
-  { label: 'Tous les thèmes', value: 'all' },
-  { label: 'Famille', value: 'famille' },
-  { label: 'Business', value: 'business' },
-  { label: 'Spicy', value: 'spicy' },
-]
+const SORTS = computed(() => [
+  { label: t('dashboard.sortRecent'), value: 'recent' },
+  { label: t('dashboard.sortOld'), value: 'old' },
+  { label: t('dashboard.sortScoreDesc'), value: 'score-desc' },
+  { label: t('dashboard.sortScoreAsc'), value: 'score-asc' },
+])
+const THEMES = computed(() => [
+  { label: t('dashboard.themeAll'), value: 'all' },
+  { label: t('themes.famille'), value: 'famille' },
+  { label: t('themes.business'), value: 'business' },
+  { label: t('themes.spicy'), value: 'spicy' },
+])
 const THEME_BADGE: Record<string, string> = {
   famille: 'bg-pikow-green/30 text-pikow-teal',
   business: 'bg-pikow-blue/15 text-pikow-blue',
@@ -77,7 +80,7 @@ const filtered = computed(() => {
 })
 
 function formatDate(date: string): string {
-  return new Date(date).toLocaleDateString('fr-FR', {
+  return new Date(date).toLocaleDateString(locale.value, {
     day: 'numeric',
     month: 'long',
     year: 'numeric',
@@ -104,7 +107,7 @@ async function load() {
     )
     games.value = details
   } catch {
-    error.value = 'Impossible de charger tes parties.'
+    error.value = t('dashboard.loadError')
   } finally {
     loading.value = false
   }
@@ -118,17 +121,24 @@ onMounted(load)
     <AppNavbar />
 
     <div class="mx-auto max-w-5xl px-6 py-10">
-      <h1 class="font-display text-3xl text-pikow-ink sm:text-4xl">Mes parties</h1>
+      <h1 class="font-display text-3xl text-pikow-ink sm:text-4xl">{{ $t('dashboard.title') }}</h1>
       <p class="mt-1 font-body text-sm text-pikow-ink/60">
-        Retrouve l'historique de tes parties, leurs manches et leurs gagnants.
+        {{ $t('dashboard.subtitle') }}
       </p>
 
       <div class="mt-6 grid gap-4 sm:grid-cols-2">
-        <BaseSelect v-model="sort" label="Trier par" id="dash-sort" :options="SORTS" />
-        <BaseSelect v-model="themeFilter" label="Thème" id="dash-theme" :options="THEMES" />
+        <BaseSelect v-model="sort" :label="$t('dashboard.sortBy')" id="dash-sort" :options="SORTS" />
+        <BaseSelect
+          v-model="themeFilter"
+          :label="$t('dashboard.theme')"
+          id="dash-theme"
+          :options="THEMES"
+        />
       </div>
 
-      <p v-if="loading" class="mt-10 text-center font-body text-pikow-ink/50">Chargement…</p>
+      <p v-if="loading" class="mt-10 text-center font-body text-pikow-ink/50">
+        {{ $t('common.loading') }}
+      </p>
       <p v-else-if="error" class="mt-10 text-center font-body font-bold text-pikow-red">
         {{ error }}
       </p>
@@ -137,9 +147,9 @@ onMounted(load)
         v-else-if="!filtered.length"
         class="mt-10 rounded-2xl bg-white p-8 text-center shadow-sm"
       >
-        <p class="font-body text-pikow-ink/60">Aucune partie pour le moment.</p>
+        <p class="font-body text-pikow-ink/60">{{ $t('dashboard.empty') }}</p>
         <div class="mt-4 flex justify-center">
-          <BaseButton variant="primary" to="/game/new">Lancer une partie</BaseButton>
+          <BaseButton variant="primary" to="/game/new">{{ $t('dashboard.startGame') }}</BaseButton>
         </div>
       </div>
 
@@ -152,21 +162,21 @@ onMounted(load)
           <div class="flex flex-wrap items-center justify-between gap-3">
             <div class="flex flex-wrap items-center gap-3">
               <span
-                class="rounded-full px-3 py-1 font-body text-xs font-bold capitalize"
+                class="rounded-full px-3 py-1 font-body text-xs font-bold"
                 :class="THEME_BADGE[entry.game.theme] ?? 'bg-pikow-gray text-pikow-ink'"
               >
-                {{ entry.game.theme }}
+                {{ $t(`themes.${entry.game.theme}`) }}
               </span>
               <span class="font-body text-sm text-pikow-ink/60">{{
                 formatDate(entry.game.date)
               }}</span>
               <span class="font-body text-sm text-pikow-ink/60"
-                >· {{ entry.game.nbPlayers }} joueurs</span
+                >· {{ entry.game.nbPlayers }} {{ $t('dashboard.players') }}</span
               >
             </div>
             <div class="flex items-center gap-2 font-body text-sm font-bold text-pikow-ink">
               <Trophy class="size-4 text-pikow-yellow" />
-              Gagnant : {{ entry.winner }}
+              {{ $t('dashboard.winner') }} {{ entry.winner }}
               <span class="flex items-center gap-1 text-pikow-ink/60">
                 <Coins class="size-4" />{{ entry.topScore }}
               </span>
@@ -174,7 +184,7 @@ onMounted(load)
           </div>
 
           <div v-if="entry.pitches.length" class="mt-4 border-t border-black/5 pt-4">
-            <p class="mb-2 font-body text-xs font-bold text-pikow-ink/50">Manches</p>
+            <p class="mb-2 font-body text-xs font-bold text-pikow-ink/50">{{ $t('dashboard.rounds') }}</p>
             <ul class="flex flex-col gap-2">
               <li
                 v-for="pitch in entry.pitches"

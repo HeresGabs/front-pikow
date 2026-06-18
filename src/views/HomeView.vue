@@ -17,8 +17,8 @@ import SectionTitle from '@/components/ui/SectionTitle.vue'
 const auth = useAuthStore()
 
 const navLinks = [
-  { label: 'Accueil', href: '/' },
-  { label: 'Boutique', href: 'about:blank' },
+  { key: 'nav.home', href: '/' },
+  { key: 'nav.shop', href: 'about:blank' },
 ]
 </script>
 
@@ -29,24 +29,21 @@ const navLinks = [
     <section class="bg-pikow-gray px-6 py-14 sm:py-20">
       <div class="mx-auto grid max-w-6xl items-center gap-10 md:grid-cols-2">
         <div>
-          <h1 class="font-display text-4xl leading-tight sm:text-5xl">
-            Inventez des produits
-            <span class="text-pikow-blue">complètement</span>
-            improbables.
-          </h1>
+          <i18n-t keypath="hero.title" tag="h1" class="font-display text-4xl leading-tight sm:text-5xl">
+            <template #highlight>
+              <span class="text-pikow-blue">{{ $t('hero.highlight') }}</span>
+            </template>
+          </i18n-t>
           <p class="mt-5 max-w-md font-body text-sm text-pikow-ink/70">
-            Inspiré de « Qui veut être mon associé ? », Pikow associe deux objets au hasard… à vous
-            d'en faire le pitch du siècle !
+            {{ $t('hero.subtitle') }}
           </p>
           <div class="mt-8 flex flex-col gap-4 sm:flex-row">
             <BaseButton v-if="auth.isAuthenticated" variant="primary" to="/game/new">
-              Lancer une partie
+              {{ $t('hero.startGame') }}
             </BaseButton>
-            <BaseButton v-else variant="primary" to="/register"
-              >S'inscrire &amp; jouer !</BaseButton
-            >
+            <BaseButton v-else variant="primary" to="/register">{{ $t('hero.register') }}</BaseButton>
             <BaseButton variant="secondary" href="#comment-ca-marche">
-              Voir comment ça marche
+              {{ $t('hero.howItWorks') }}
             </BaseButton>
           </div>
         </div>
@@ -56,35 +53,35 @@ const navLinks = [
 
     <section id="comment-ca-marche" class="scroll-mt-6 bg-white px-6 py-16">
       <div class="mx-auto max-w-6xl">
-        <SectionTitle title="Comment ça marche ?" />
+        <SectionTitle :title="$t('how.title')" />
         <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           <StepCard
-            step="Etape 1"
-            title="Une seule tablette"
+            :step="$t('how.step', { n: 1 })"
+            :title="$t('how.s1Title')"
             :icon="Tablet"
             iconColor="blue"
-            description="Tout le monde joue autour d'un seul appareil partagé."
+            :description="$t('how.s1Desc')"
           />
           <StepCard
-            step="Etape 2"
-            title="Deux mots improbables"
+            :step="$t('how.step', { n: 2 })"
+            :title="$t('how.s2Title')"
             :icon="Shuffle"
             iconColor="pink"
-            description="L'app tire au sort deux objets à associer."
+            :description="$t('how.s2Desc')"
           />
           <StepCard
-            step="Etape 3"
-            title="Pitch chronométré"
+            :step="$t('how.step', { n: 3 })"
+            :title="$t('how.s3Title')"
             :icon="Timer"
             iconColor="red"
-            description="Tout le monde joue autour d'un seul appareil partagé."
+            :description="$t('how.s3Desc')"
           />
           <StepCard
-            step="Etape 4"
-            title="Votez"
+            :step="$t('how.step', { n: 4 })"
+            :title="$t('how.s4Title')"
             :icon="Trophy"
             iconColor="green"
-            description="La meilleure idée remporte la partie."
+            :description="$t('how.s4Desc')"
           />
         </div>
       </div>
@@ -92,25 +89,25 @@ const navLinks = [
 
     <section class="bg-pikow-gray px-6 py-16">
       <div class="mx-auto max-w-6xl">
-        <SectionTitle title="Pour toutes les bandes" />
+        <SectionTitle :title="$t('bands.title')" />
         <div class="mt-10 grid gap-5 sm:grid-cols-3">
           <CategoryCard
             color="yellow"
             :icon="Users"
-            title="Familles"
-            description="Des fous rires partagés à partir de 7 ans."
+            :title="$t('bands.familiesTitle')"
+            :description="$t('bands.familiesDesc')"
           />
           <CategoryCard
             color="green"
             :icon="Users"
-            title="Entreprises"
-            description="L'ice breaker parfait pour vos équipes."
+            :title="$t('bands.companiesTitle')"
+            :description="$t('bands.companiesDesc')"
           />
           <CategoryCard
             color="blue"
             :icon="Users"
-            title="Écoles"
-            description="Tout le monde joue autour d'un seul appareil partagé."
+            :title="$t('bands.schoolsTitle')"
+            :description="$t('bands.schoolsDesc')"
           />
         </div>
       </div>
@@ -118,25 +115,15 @@ const navLinks = [
 
     <section class="bg-white px-6 py-16">
       <div class="mx-auto max-w-6xl">
-        <SectionTitle title="Ils l'ont testé !" subtitle="Avis vérifiés des joueurs" />
+        <SectionTitle :title="$t('reviews.title')" :subtitle="$t('reviews.subtitle')" />
         <div class="mt-10 grid gap-5 sm:grid-cols-3">
           <TestimonialCard
-            name="Amélie Poulain"
+            v-for="i in 3"
+            :key="i"
+            :name="$t('reviews.name')"
             :rating="5"
-            title="Super jeu !"
-            text="Si vous jouez pas au jeu vous ratez vraiment quelque chose !"
-          />
-          <TestimonialCard
-            name="Amélie Poulain"
-            :rating="5"
-            title="Super jeu !"
-            text="Si vous jouez pas au jeu vous ratez vraiment quelque chose !"
-          />
-          <TestimonialCard
-            name="Amélie Poulain"
-            :rating="5"
-            title="Super jeu !"
-            text="Si vous jouez pas au jeu vous ratez vraiment quelque chose !"
+            :title="$t('reviews.reviewTitle')"
+            :text="$t('reviews.reviewText')"
           />
         </div>
       </div>

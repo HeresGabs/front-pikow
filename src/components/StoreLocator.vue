@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 import SectionTitle from './ui/SectionTitle.vue'
 import SearchBar from './ui/SearchBar.vue'
 import FilterPill from './ui/FilterPill.vue'
+
+const { t } = useI18n()
 
 interface Store {
   name: string
@@ -115,7 +118,7 @@ function render() {
     fillColor: '#e7544b',
     fillOpacity: 1,
   })
-    .bindPopup('Vous êtes ici')
+    .bindPopup(t('stores.youAreHere'))
     .addTo(overlay)
 
   visibleStores().forEach((s) => {
@@ -207,11 +210,11 @@ onBeforeUnmount(() => {
 <template>
   <section class="bg-pikow-gray px-6 py-14">
     <div class="mx-auto max-w-5xl">
-      <SectionTitle title="Nos magasins revendeurs" />
+      <SectionTitle :title="$t('stores.title')" />
 
       <div class="mt-8 flex flex-col items-center gap-4">
         <div class="relative z-20 w-full max-w-md">
-          <SearchBar v-model="search" placeholder="Rechercher une ville…" @keyup.enter="onSearch" />
+          <SearchBar v-model="search" :placeholder="$t('stores.searchPlaceholder')" @keyup.enter="onSearch" />
           <ul
             v-if="suggestions.length"
             class="absolute top-full left-0 mt-2 w-full overflow-hidden rounded-2xl bg-white shadow-lg"

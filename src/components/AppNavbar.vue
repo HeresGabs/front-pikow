@@ -5,17 +5,18 @@ import { ChevronDown, LogOut, Menu, User, X, LayoutGrid } from 'lucide-vue-next'
 import { useAuthStore } from '@/stores/auth'
 import PikowLogo from './PikowLogo.vue'
 import BaseButton from './ui/BaseButton.vue'
+import LanguageSwitcher from './LanguageSwitcher.vue'
 
 withDefaults(
   defineProps<{
-    links?: { label: string; href: string }[]
+    links?: { key: string; href: string }[]
   }>(),
   {
     links: () => [
-      { label: 'Accueil', href: '/' },
-      { label: 'Boutique', href: '#' },
+      { key: 'nav.home', href: '/' },
+      { key: 'nav.shop', href: '#' },
     ],
-  }
+  },
 )
 
 const router = useRouter()
@@ -38,19 +39,19 @@ function logout() {
       <PikowLogo />
 
       <ul class="hidden items-center gap-8 md:flex">
-        <li v-for="link in links" :key="link.label">
+        <li v-for="link in links" :key="link.key">
           <a
             :href="link.href"
             class="font-body text-sm font-bold text-pikow-ink transition hover:text-pikow-blue"
           >
-            {{ link.label }}
+            {{ $t(link.key) }}
           </a>
         </li>
       </ul>
 
       <div class="hidden items-center gap-4 md:flex">
         <BaseButton v-if="auth.isAuthenticated" variant="primary" to="/game/new">
-          Jouer
+          {{ $t('nav.play') }}
         </BaseButton>
         <div v-if="auth.isAuthenticated" class="relative">
           <button
@@ -71,31 +72,31 @@ function logout() {
               @click="userMenu = false"
             >
               <LayoutGrid class="size-4" />
-              Mes parties
+              {{ $t('nav.myGames') }}
             </RouterLink>
             <button
               class="flex w-full cursor-pointer items-center gap-2 px-4 py-2.5 text-left font-body text-sm text-pikow-ink transition hover:bg-pikow-gray"
               @click="logout"
             >
               <LogOut class="size-4" />
-              Se déconnecter
+              {{ $t('nav.logout') }}
             </button>
           </div>
         </div>
-        <BaseButton v-else variant="primary" to="/login">Jouer</BaseButton>
-        <button class="text-xl" aria-label="Changer de langue">🇫🇷</button>
+        <BaseButton v-else variant="primary" to="/login">{{ $t('nav.play') }}</BaseButton>
+        <LanguageSwitcher />
       </div>
 
-      <button class="text-pikow-ink md:hidden" aria-label="Menu" @click="open = !open">
+      <button class="text-pikow-ink md:hidden" :aria-label="$t('nav.language')" @click="open = !open">
         <X v-if="open" class="size-7" />
         <Menu v-else class="size-7" />
       </button>
     </nav>
 
     <ul v-if="open" class="flex flex-col gap-4 px-6 pb-6 md:hidden">
-      <li v-for="link in links" :key="link.label">
+      <li v-for="link in links" :key="link.key">
         <a :href="link.href" class="font-body text-sm font-bold text-pikow-ink">
-          {{ link.label }}
+          {{ $t(link.key) }}
         </a>
       </li>
       <li v-if="auth.isAuthenticated" class="flex items-center gap-2 font-body text-sm font-bold">
@@ -103,7 +104,7 @@ function logout() {
         {{ auth.displayName }}
       </li>
       <li v-if="auth.isAuthenticated">
-        <BaseButton variant="primary" block to="/game/new">Jouer</BaseButton>
+        <BaseButton variant="primary" block to="/game/new">{{ $t('nav.play') }}</BaseButton>
       </li>
       <li v-if="auth.isAuthenticated">
         <RouterLink
@@ -111,13 +112,14 @@ function logout() {
           class="block font-body text-sm font-bold text-pikow-ink"
           @click="open = false"
         >
-          Mes parties
+          {{ $t('nav.myGames') }}
         </RouterLink>
       </li>
       <li v-if="auth.isAuthenticated">
-        <BaseButton variant="secondary" block @click="logout">Se déconnecter</BaseButton>
+        <BaseButton variant="secondary" block @click="logout">{{ $t('nav.logout') }}</BaseButton>
       </li>
-      <li v-else><BaseButton variant="primary" block to="/login">Jouer</BaseButton></li>
+      <li v-else><BaseButton variant="primary" block to="/login">{{ $t('nav.play') }}</BaseButton></li>
+      <li><LanguageSwitcher /></li>
     </ul>
   </header>
 </template>
